@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="320" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Augur precipitation nowcasting workflow</title>
+  <desc id="desc">Workflow from radar sequences through training, evaluation, and visualization.</desc>
+  <defs>
+
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto">
+      <path d="M0,0 L10,5.5 L0,11 z" fill="#527187"/>
+    </marker>
+    <style>
+      .t { font-family: Arial, Helvetica, sans-serif; fill: #142b3e; }
+      .section { font-size: 15px; font-weight: 700; letter-spacing: 1.4px; }
+      .box-title { font-size: 21px; font-weight: 700; }
+      .body { font-size: 17px; fill: #415d70; }
+      .small { font-size: 15px; fill: #587083; }
+      .pill { font-size: 14px; font-weight: 700; }
+      .arrow-label { font-size: 13px; font-weight: 700; fill: #547286; letter-spacing: .5px; }
+    </style>
+  </defs>
+
+  <!-- clean diagram canvas -->
+  <rect width="1200" height="640" fill="#f7fafc"/>
+  <rect x="20" y="20" width="1160" height="600" rx="20" fill="#ffffff" stroke="#d8e4eb" stroke-width="2"/>
+
+  <!-- main flow arrows, drawn behind the cards -->
+  <path d="M270 200 H306" fill="none" stroke="#527187" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M565 200 H601" fill="none" stroke="#527187" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M860 200 H896" fill="none" stroke="#527187" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M730 310 V370 H1020 V310" fill="none" stroke="#7890a0" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+  <path d="M1020 370 H440 V310" fill="none" stroke="#7890a0" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+  <text x="875" y="360" text-anchor="middle" class="t arrow-label">CHECKPOINTS + PREDICTIONS</text>
+
+  <!-- data -->
+  <g>
+    <rect x="55" y="100" width="215" height="210" rx="14" fill="#DDF2FF" stroke="#2C93B7" stroke-width="2.5"/>
+  </g>
+  <text x="78" y="130" class="t section" fill="#237a9e">01 · DATA</text>
+  <g transform="translate(229 113)" fill="none" stroke="#237a9e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Radar icon">
+    <circle cx="12" cy="12" r="8"/>
+    <path d="M12 12L19 5M12 12H4M12 12V20"/>
+    <circle cx="12" cy="12" r="1.8" fill="#237a9e" stroke="none"/>
+  </g>
+  <text x="78" y="169" class="t box-title">Radar sequences</text>
+  <text x="78" y="204" class="t body">SEVIR / HDF5</text>
+  <text x="78" y="232" class="t body">6 input → 6 target</text>
+  <rect x="78" y="258" width="120" height="25" rx="12" fill="#bfe4ef"/>
+  <text x="138" y="276" text-anchor="middle" class="t pill" fill="#17617d">128 × 128</text>
+
+  <!-- experiment design -->
+  <g>
+    <rect x="305" y="100" width="260" height="210" rx="14" fill="#E5F8F4" stroke="#20A08F" stroke-width="2.5"/>
+  </g>
+  <text x="328" y="130" class="t section" fill="#147B70">02 · DESIGN</text>
+  <g transform="translate(523 113)" fill="none" stroke="#147B70" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Configuration icon">
+    <path d="M3 6H21M3 12H21M3 18H21"/>
+    <circle cx="8" cy="6" r="2.3" fill="#E5F8F4"/>
+    <circle cx="16" cy="12" r="2.3" fill="#E5F8F4"/>
+    <circle cx="10" cy="18" r="2.3" fill="#E5F8F4"/>
+  </g>
+  <text x="328" y="169" class="t box-title">Experiment setup</text>
+  <text x="328" y="204" class="t body">train.py</text>
+  <text x="328" y="232" class="t body">Model + data registries</text>
+  <rect x="328" y="258" width="175" height="25" rx="12" fill="#C5EEE4"/>
+  <text x="415" y="276" text-anchor="middle" class="t pill" fill="#17665D">batch · devices · epochs</text>
+
+  <!-- training -->
+  <g>
+    <rect x="600" y="100" width="260" height="210" rx="14" fill="#E7F6E7" stroke="#46A66A" stroke-width="2.5"/>
+  </g>
+  <text x="623" y="130" class="t section" fill="#287b4b">03 · TRAIN</text>
+  <g transform="translate(818 113)" fill="none" stroke="#287b4b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Neural network icon">
+    <path d="M6 6L18 9M6 6L18 17M6 18L18 9M6 18L18 17"/>
+    <circle cx="5" cy="6" r="2.5" fill="#E7F6E7"/>
+    <circle cx="5" cy="18" r="2.5" fill="#E7F6E7"/>
+    <circle cx="19" cy="9" r="2.5" fill="#E7F6E7"/>
+    <circle cx="19" cy="17" r="2.5" fill="#E7F6E7"/>
+  </g>
+  <text x="623" y="169" class="t box-title">Model zoo</text>
+  <text x="623" y="204" class="t body">Lightning + DDP</text>
+  <text x="623" y="232" class="t body">CNN · recurrent · generative</text>
+  <rect x="623" y="258" width="155" height="25" rx="12" fill="#C8EACF"/>
+  <text x="700" y="276" text-anchor="middle" class="t pill" fill="#286842">checkpoints + logs</text>
+
+  <!-- evaluation -->
+  <g>
+    <rect x="895" y="100" width="250" height="210" rx="14" fill="#FFF1D6" stroke="#D9922E" stroke-width="2.5"/>
+  </g>
+  <text x="918" y="130" class="t section" fill="#a36011">04 · EVALUATE</text>
+  <g transform="translate(1100 113)" fill="none" stroke="#a36011" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-label="Evaluation icon">
+    <path d="M3 20V4M3 20H21"/>
+    <path d="M7 16V12M12 16V8M17 16V5" stroke-width="3.4"/>
+    <path d="M7 9L12 5L17 8"/>
+  </g>
+  <text x="918" y="169" class="t box-title">ModelFactory</text>
+  <text x="918" y="204" class="t body">Unified inference</text>
+  <text x="918" y="232" class="t body">Common output: B,T,H,W</text>
+  <rect x="918" y="258" width="157" height="25" rx="12" fill="#ffe0a9"/>
+  <text x="996" y="276" text-anchor="middle" class="t pill" fill="#91550d">10–60 min leads</text>
+
+  <!-- evidence and insight -->
+  <g>
+    <rect x="55" y="395" width="1090" height="190" rx="14" fill="#F0E7FF" stroke="#8963BE" stroke-width="2.5"/>
+  </g>
+  <text x="80" y="428" class="t section" fill="#68419c">05 · EVIDENCE AND INSIGHT</text>
+  <line x1="410" y1="443" x2="410" y2="558" stroke="#cbb6e8" stroke-width="2"/>
+  <line x1="780" y1="443" x2="780" y2="558" stroke="#cbb6e8" stroke-width="2"/>
+
+  <g transform="translate(358 448)" fill="none" stroke="#68419c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Metrics icon">
+    <path d="M3 20V4M3 20H21"/>
+    <path d="M7 17V13M12 17V8M17 17V5" stroke-width="3.2"/>
+  </g>
+  <text x="82" y="468" class="t box-title">Metrics</text>
+  <text x="82" y="501" class="t body">RMSE · SSIM · CSI</text>
+  <text x="82" y="529" class="t small">per lead time</text>
+
+  <g transform="translate(728 448)" fill="none" stroke="#68419c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Case study icon">
+    <path d="M4 20V5L12 2L20 5V20Z"/>
+    <path d="M8 20V13H16V20M8 8H8.1M12 8H12.1M16 8H16.1" stroke-width="2.8"/>
+  </g>
+  <text x="440" y="468" class="t box-title">Case studies</text>
+  <text x="440" y="501" class="t body">Events + predictions</text>
+  <text x="440" y="529" class="t small">extreme rain cases</text>
+
+  <g transform="translate(1090 448)" fill="none" stroke="#68419c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Visualization icon">
+    <rect x="3" y="4" width="18" height="16" rx="2"/>
+    <circle cx="8" cy="9" r="1.7" fill="#68419c" stroke="none"/>
+    <path d="M5 17L10 12L13 15L16 11L19 17"/>
+  </g>
+  <text x="810" y="468" class="t box-title">Visualization</text>
+  <text x="810" y="501" class="t body">Forecast vs truth</text>
+  <text x="810" y="529" class="t small">spatial + spectral views</text>
+</svg>
